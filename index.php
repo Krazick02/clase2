@@ -70,8 +70,7 @@
     //SE MUEVE CON LAS TECLAS W,S,D,A
 
     document.addEventListener('keydown',function(e){
-        //     // console.log(e);
-        //     //arriba
+        // upppp
         if(e.keyCode == 87 || e.keyCode == 38){
             sY-=25;
         }
