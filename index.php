@@ -17,7 +17,6 @@
 </head>
 <body>
 <canvas width="1000" height="800" id="canvas"></canvas>
-<img src="ccc.png" id="imagen" style="display: none;">
 <script type="text/javascript">
     var canvas = document.getElementById('canvas'); 
     var ctx=canvas.getContext('2d');
@@ -26,9 +25,13 @@
     var press =false;
     var x = 0;
     var y = 0;
+    var sX=240,sY=240;
+    var square=null;
+
+    square =new cuadro(sX,sY,40,40,'red');
     
     canvas.addEventListener('click',function(e){
-        console.log(e);
+        console.log(sX,sY);
         ctx.fillStyle=color;
         if(fig=='rec'){
             ctx.fillRect(e.offsetX-20,e.offsetY-20,40,40);
@@ -64,6 +67,56 @@
     })
 
 
+    //SE MUEVE CON LAS TECLAS W,S,D,A
+
+    document.addEventListener('keydown',function(e){
+        //     // console.log(e);
+        //     //arriba
+        if(e.keyCode == 87 || e.keyCode == 38){
+            sY-=25;
+        }
+        //ritgh
+        if(e.keyCode == 83 || e.keyCode == 40){
+           sY +=25;
+        }
+        //left
+        if(e.keyCode == 65 || e.keyCode == 37){
+            sX -=25;
+        }
+        //down
+        if(e.keyCode == 68 || e.keyCode == 39){
+            sX +=25;
+        }
+        paint();
+        })
+
+
+
+
+    function paint(){
+            ctx.fillStyle ='gray';
+            ctx.fillRect(0,0,500,500);
+            
+            square.c=random_rgba();
+            square.dibujar(ctx);
+            update();
+        }
+        function update(){
+            square.x=sX;
+            square.y=sY;
+        }
+    function cuadro(x,y,w,n,c){
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.n = n;
+            this.c = c;
+            this.dibujar = function(ctx){
+                ctx.fillStyle=this.c;
+                ctx.fillRect(this.x,this.y,this.w,this.n);
+                ctx.strokeRect(this.x,this.y,this.w,this.n);
+            }
+        }
     function random_rgba() {
         var o = Math.round, r = Math.random, s = 255;
         return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
